@@ -1,0 +1,49 @@
+clc;
+clear all;
+img = imread('lena.png');
+subplot(3,2,1);
+imshow(img);
+title('orgiginal image');
+
+gray_img = rgb2gray(img);
+subplot(3,2,2);
+title('Gray image');
+imshow(gray_img);
+
+//Create a Blurred or Smooth Image
+
+h = fspecial('gaussian',[11 11], 4);
+disp(h);
+
+//figure,surf(h);
+
+lena_smoothed = imfilter(gray_img,h);
+subplot(3,2,3);
+title('Smoothed Image');
+imshow(lena_smoothed);
+
+// Edge Generation by shifting Left and Right
+/*
+LenaL = lena_smoothed;
+LenaL(:,[1:(end-1)]) = LenaL(:,[2:end]);
+show_window(1);
+subplot(2,2,1);
+title('Left Shit edge');
+imshow(LenaL);
+
+LenaR = lena_smoothed;
+LenaR(:,[2:end]) = LenaR(:,[1:(end-1)]);
+subplot(2,2,2);
+imshow(LenaR);
+title('Right Shift edge');
+*/
+
+Cannyedge = edge(lena_smoothed,'canny');
+subplot(3,2,4);
+imshow(Cannyedge);
+title('Canny Edge');
+
+Log_gaussianedge = edge(lena_smoothed,'log');
+subplot(3,2,5);
+imshow(Cannyedge);
+title('Laplaccians Gaussian edge');
